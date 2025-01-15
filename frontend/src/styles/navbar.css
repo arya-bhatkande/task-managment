@@ -1,0 +1,69 @@
+/* Navbar.css */
+
+/* General styling for the navbar */
+.navbar {
+    background-color: #343a40; /* Dark background */
+    padding: 0.8rem 1rem;
+    border-bottom: 2px solid #495057;
+  }
+  
+  /* Brand link */
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .navbar-brand:hover {
+    color: #e9ecef;
+    text-decoration: none;
+  }
+  
+  /* Nav links */
+  .nav-link {
+    color: #adb5bd; /* Light gray */
+    font-size: 1rem;
+    transition: color 0.2s;
+  }
+  
+  .nav-link.active {
+    color: #ffffff; /* White for active links */
+    font-weight: bold;
+  }
+  
+  .nav-link:hover {
+    color: #e9ecef; /* Light hover effect */
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: #0d6efd; /* Primary blue */
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0b5ed7; /* Darker blue on hover */
+  }
+  
+  .btn-primary:active {
+    background-color: #0a58ca; /* Even darker blue when active */
+    transform: scale(0.98); /* Slight scale effect */
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .navbar-collapse {
+      text-align: center;
+    }
+  
+    .nav-link {
+      display: block; /* Stack links vertically */
+      padding: 0.5rem 0;
+    }
+  
+    .btn-primary {
+      margin: 0.5rem 0;
+    }
+  }
+  

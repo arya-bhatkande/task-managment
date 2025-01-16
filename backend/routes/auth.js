@@ -38,7 +38,7 @@ router.post('/createuser' ,[
  });
 
  const data ={
-    user:{
+    user:{ 
         id:user.id
     }
  }

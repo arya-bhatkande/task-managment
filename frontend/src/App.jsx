@@ -12,6 +12,7 @@ import Alert from './components/Alert';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useState } from 'react';
+import NoteState from './context/notes/NoteState';
 
 function App() {
   
@@ -27,7 +28,7 @@ function App() {
   }
   return (
     <>
-      
+      <NoteState>
    <Router>
    <Navbar/>
    <Alert alert={alert}/>
@@ -40,7 +41,7 @@ function App() {
    </Routes>
    </div>
    </Router>
-   
+   </NoteState>
      
     </>
   )

@@ -12,7 +12,7 @@ const Login = (props) => {
     setLoading(true);
 
     try {
-        const response = await fetch("http://localhost:5000/api/auth/login",{
+        const response = await fetch("http://localhost:8080/api/auth/login",{
             method:'POST',
             headers:{
                 'content-type':'application/json' },
@@ -43,19 +43,10 @@ const Login = (props) => {
     <div className="mt-3">
       <h1>Login to continue </h1>
       <form onSubmit={handleSubmit}>
-        <div className="my-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={credentials.email}
-            onChange={onChange}
-            required
-          />
-          
-        </div>
+      <div className="mb-3">
+    <label htmlFor="email" className="form-label">Email address</label>
+    <input type="email" className="form-control" id="email" aria-describedby="emailHelp" name='email' onChange={onChange}/>
+  </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Password</label>
           <input

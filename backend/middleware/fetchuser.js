@@ -1,20 +1,22 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET ='arya123456'
 
-const fetchuser=(req,res,next)=>{
-    //get the user from the jwt token and add id to req object
-    const token = req.header('auth-token')
-    if(!token){
-        res.status(401).send({error:'please authenticate using valid token'})
-    }
-    try {
-        const data = jwt.verify(token, JWT_SECRET)
-    req.user = data.user
-    next()
-    } catch (error) {
-        res.status(401).send({error:'please authenticate using valid token'})
-    }
-    
-} 
+const fetchuser = (req, res, next) => {
+  const token = req.header('auth-token');
+  if (!token) {
+    return res.status(401).send({ error: "Access Denied: Token missing" });
+  }
 
-module.exports=fetchuser;
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = data.user; // Extract the user object
+    next();
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+        return res.status(401).send({ error: "Token expired. Please log in again." });
+      }
+  
+    res.status(401).send({ error: "Access Denied: Invalid Token" });
+  }
+};
+
+module.exports = fetchuser;

@@ -12,35 +12,16 @@ const NoteState = (props) => {
 
   // Get all notes
   const getnotes = async () => {
-    const token = localStorage.getItem('token');
-  
-    if (!token) {
-      console.error('Token is missing. Redirecting to login...');
-      return; // or redirect to login
-    }
-  
-    try {
-      const response = await fetch(`${host}/api/notes/fetchallnotes`, {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'auth-token': token,
-        },
-      });
-  
-      if (!response.ok) {
-        if (response.status === 401) {
-          console.error('Unauthorized access. Token might be expired.');
-          // Handle expired token: redirect to login or refresh the token
-        }
-        throw new Error(`Failed to fetch notes: ${response.status}`);
-      }
-  
-      const json = await response.json();
-      setNotes(json);
-    } catch (error) {
-      console.error('Error fetching notes:', error.message);
-    }
+    //API call
+    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    setNotes(json);
   };
   
 

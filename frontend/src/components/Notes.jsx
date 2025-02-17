@@ -1,56 +1,48 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import noteContext from '../context/notes/noteContext';
+
+import React, { useContext,useEffect,useRef,useState} from 'react'
+import noteContext from '../context/notes/noteContext'
 import NoteItem from './NoteItem';
-import Addnote from './Addnote';
+import Addnote from "./Addnote"
 import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
-  const context = useContext(noteContext);
-  const { notes, getnotes, editNote } = context;
-  const history = useNavigate();
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      try {
-        getnotes();
-      } catch (error) {
-        console.error('Failed to fetch notes:', error);
-        props.showAlert('Failed to fetch notes. Please try again later.', 'danger');
+    const context= useContext(noteContext);
+    let history = useNavigate();
+    const {notes,getnotes,editNote}=context;
+    useEffect(()=>{
+      if(localStorage.getItem('token')){
+        getnotes()
       }
-    } else {
-      history('/login');
+      else{
+       history("/login")
+      }
+      
+        // eslint-disable-next-line
+    },[])
+    const ref =useRef(null);
+    const refClose =useRef(null);
+
+    
+    const [note,setNotes]=useState({id:"",etitle:"",edescription:"",etag:""})
+
+    const updateNote=(currentNote)=>{
+           ref.current.click();
+           setNotes({id:currentNote._id,etitle:currentNote.title , edescription:currentNote.description,etag:currentNote.tag })
     }
-  }, []);
+   
+    const handleClick=(e)=>{
+        editNote(note.id, note.etitle , note.edescription, note.etag)
+        refClose.current.click();
+        props.showAlert("Upadated succesfully","success")
+    }
 
-  const ref = useRef(null);
-  const refClose = useRef(null);
-
-  const [note, setNotes] = useState({ id: '', etitle: '', edescription: '', etag: '' });
-
-  const updateNote = (currentNote) => {
-    ref.current.click();
-    setNotes({
-      id: currentNote._id,
-      etitle: currentNote.title,
-      edescription: currentNote.description,
-      etag: currentNote.tag,
-    });
-  };
-
-  const handleClick = () => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
-    refClose.current.click();
-    props.showAlert('Updated successfully', 'success');
-  };
-
-  const onChange = (e) => {
-    setNotes({ ...note, [e.target.name]: e.target.value });
-  };
-
+    const onChange=(e)=>{
+         setNotes({...note,[e.target.name]:e.target.value})
+    }
   return (
     <>
-      <Addnote showAlert={props.showAlert} />
-      <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <Addnote showAlert={props.showAlert}/>
+    <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 <div className="modal fade" id="exampleModal" tabIndex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,18 +75,17 @@ const Notes = (props) => {
     </div>
   </div>
 </div>
-      <div className="row my-3">
-        <h1>Your Notes</h1>
-        <div className="container">
-          {Array.isArray(notes) && notes.length === 0 && 'No notes to display'}
-        </div>
-        {Array.isArray(notes) &&
-          notes.map((note) => (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
-          ))}
-      </div>
+    <div className='row my-3'>
+    <h1>your notes</h1>
+    <div className='container'>
+     {notes.length===0 && 'No notes to display '}
+    </div>
+    {notes.map((note)=>{
+      return <NoteItem key ={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
+    })}
+    </div>
     </>
-  );
-};
+  )
+}
 
-export default Notes;
+export default Notes
